@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pomodoro Timer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #1e1e2f;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background-color: #2a2a40;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+    .timer {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 30px auto;
+    }
+    svg circle {
+      fill: none;
+      stroke-width: 10;
+    }
+    .bg {
+      stroke: #555;
+    }
+    .progress {
+      /* stroke: url(#progress-gradient); */
+      stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: center;
+      transition: stroke-dashoffset 1s linear, stroke 0.5s linear;
+    }
+    .time {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.5rem;
+    }
+    .buttons, .set-time {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .start { background-color: green; color: white; }
+    .pause { background-color: goldenrod; color: white; }
+    .reset { background-color: darkred; color: white; }
+    #edit-time-btn {
+        justify-content: center;
+      background-color: #2962ff;
+      color: white;
+      margin-bottom: 15px;
+    }
+    .set-time {
+        align-items: center;
+      flex-direction: column;
+      background: #393a57;
+      padding: 15px;
+      border-radius: 12px;
+      display: none; /* hidden by default */
+      gap: 10px;
+      text-align: center;
+    }
+    .set-time label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ccc;
+      justify-content: center;
+      width: 100%;
+    }
+    /* Indent Short and Long under Breaks */
+    .set-time label.breaks-label {
+      margin-left: 15px;
+      justify-content: flex-start;
+      max-width: 200px;
+      margin: 0 auto;
+    }
+    .set-time .breaks-header {
+      margin-top: 10px;
+      color: #aaa;
+      font-weight: bold;
+      text-align: left;
+      max-width: 200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .set-time input {
+      width: 60px;
+      padding: 5px;
+      text-align: center;
+      border: none;
+      border-radius: 5px;
+      background-color: #44475a;
+      color: white;
+    }
+    .set-time button {
+      background-color: #00b8d4;
+      width: 100px;
+      margin: 10px auto 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pomodoro Timer</h1>
+
+    <button id="edit-time-btn" onclick="toggleEditTime()">Edit Time</button>
+
+    <div class="set-time" id="set-time-panel">  
+      <label>Working Time: <input type="number" id="work-min" value="25" min="1"></label>
+
+      <div class="breaks-header">Breaks:</div>
+
+      <label class="breaks-label">Short Break: <input type="number" id="short-min" value="5" min="1"></label>
+      <label class="breaks-label">Long Break: <input type="number" id="long-min" value="10" min="1"></label>
+
+      <button onclick="setCustomTimes()">Set Time</button>
+    </div>
+
+    <div class="timer">
+      <svg width="200" height="200">
+        <circle class="bg" r="90" cx="100" cy="100"></circle>
+        <circle class="progress" r="90" cx="100" cy="100" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+      </svg>
+      <div class="time" id="timer">25:00</div>
+    </div>
+
+    <div class="buttons">
+      <button class="start" onclick="startTimer()">Start</button>
+      <button class="pause" onclick="pauseTimer()">Pause</button>
+      <button class="reset" onclick="resetTimer()">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    let workDuration = 25 * 60;
+    let shortBreak = 5 * 60;
+    let longBreak = 15 * 60;
+
+    let current = workDuration;
+    let interval = null;
+    let isRunning = false;
+    let session = "Work";
+
+    const timerElement = document.getElementById("timer");
+    const progressCircle = document.querySelector(".progress");
+    const radius = 90;
+    const circumference = 2 * Math.PI * radius;
+
+    const setTimePanel = document.getElementById("set-time-panel");
+    const editTimeBtn = document.getElementById("edit-time-btn");
+
+    progressCircle.style.strokeDasharray = circumference;
+
+    function updateDisplay() {
+      const minutes = Math.floor(current / 60);
+      const seconds = current % 60;
+      timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      const offset = circumference - (current / getSessionDuration()) * circumference;
+      progressCircle.style.strokeDashoffset = offset;
+
+      // Dynamic color: green (start) -> yellow (middle) -> red (end)
+      const percent = current / getSessionDuration();
+      let r, g, b;
+      if (percent > 0.5) {
+        // Green to Yellow
+        // Green: (0,255,99), Yellow: (255,255,0)
+        const t = (1 - percent) * 2; // 0 at 100%, 1 at 50%
+        r = Math.round(0 + (255 - 0) * t);
+        g = 255;
+        b = Math.round(99 - 99 * t);
+      } else {
+        // Yellow to Red
+        // Yellow: (255,255,0), Red: (255,0,0)
+        const t = 1 - percent * 2; // 0 at 50%, 1 at 0%
+        r = 255;
+        g = Math.round(255 - 255 * t);
+        b = 0;
+      }
+      progressCircle.style.stroke = `rgb(${r},${g},${b})`;
+    }
+
+    function getSessionDuration() {
+      if (session === "Work") return workDuration;
+      if (session === "Short Break") return shortBreak;
+      return longBreak;
+    }
+
+    function startTimer() {
+      if (isRunning) return;
+      isRunning = true;
+      interval = setInterval(() => {
+        if (current === 0) {
+          clearInterval(interval);
+          isRunning = false;
+          if (session === "Work") {
+            session = "Short Break";
+            current = shortBreak;
+            alert("Work done! Time for a break.");
+          } else if (session === "Short Break") {
+            session = "Work";
+            current = workDuration;
+            alert("Break over! Back to work.");
+          }
+          updateDisplay();
+          return;
+        }
+        current--;
+        updateDisplay();
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(interval);
+      isRunning = false;
+      updateDisplay(); // ensure arc updates when paused
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      session = "Work";
+      current = workDuration;
+      updateDisplay();
+    }
+
+    function toggleEditTime() {
+      if (setTimePanel.style.display === "none" || setTimePanel.style.display === "") {
+        setTimePanel.style.display = "flex";
+        editTimeBtn.textContent = "Close";
+        pauseTimer(); // pause timer when editing
+      } else {
+        setTimePanel.style.display = "none";
+        editTimeBtn.textContent = "Edit Time";
+      }
+    }
+
+    function setCustomTimes() {
+      const workInput = document.getElementById("work-min");
+      const shortInput = document.getElementById("short-min");
+      const longInput = document.getElementById("long-min");
+
+      const workVal = parseInt(workInput.value);
+      const shortVal = parseInt(shortInput.value);
+      const longVal = parseInt(longInput.value);
+
+      if (isNaN(workVal) || workVal < 1) {
+        alert("Work time must be a positive number.");
+        workInput.focus();
+        return;
+      }
+      if (isNaN(shortVal) || shortVal < 1) {
+        alert("Short break time must be a positive number.");
+        shortInput.focus();
+        return;
+      }
+      if (isNaN(longVal) || longVal < 1) {
+        alert("Long break time must be a positive number.");
+        longInput.focus();
+        return;
+      }
+
+      workDuration = workVal * 60;
+      shortBreak = shortVal * 60;
+      longBreak = longVal * 60;
+
+      if (session === "Work") current = workDuration;
+      else if (session === "Short Break") current = shortBreak;
+      else current = longBreak;
+
+      updateDisplay();
+
+      setTimePanel.style.display = "none";
+      editTimeBtn.textContent = "Edit Time";
+    }
+
+    updateDisplay();
+  </script>
+</body>
+</html>
