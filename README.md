@@ -1,4 +1,4 @@
-# StudentApp
+# StudentApp [Originally](https://github.com/AayuAmor/StudentApp) by [Team Doberman](https://github.com/AayuAmor/StudentApp#meet-team-doberman)
 
 StudentApp is built by students for students. It's a collection of simple, helpful tools to make studying, organizing, and keeping track of your progress a little easier every day.
 
