@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pomodoro Timer</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍎</text></svg>">
+  <link rel="stylesheet" href="pomodoro.css" />
+  <script src="pomodoro.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Pomodoro Timer</h1>
+
+    <button id="edit-time-btn" onclick="toggleEditTime()">Edit Time</button>
+
+    <div class="set-time" id="set-time-panel">  
+      <label>Working Time: <input type="number" id="work-min" value="25" min="1"></label>
+
+      <div class="breaks-header">Breaks:</div>
+
+      <label class="breaks-label">Short Break: <input type="number" id="short-min" value="5" min="1"></label>
+      <label class="breaks-label">Long Break: <input type="number" id="long-min" value="10" min="1"></label>
+
+      <button onclick="setCustomTimes()">Set Time</button>
+    </div>
+
+    <div class="timer">
+      <svg width="200" height="200">
+        <circle class="bg" r="90" cx="100" cy="100"></circle>
+        <circle class="progress" r="90" cx="100" cy="100" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+      </svg>
+      <div class="time" id="timer">25:00</div>
+    </div>
+
+    <div class="buttons">
+      <button class="start" onclick="startTimer()">Start</button>
+      <button class="pause" onclick="pauseTimer()">Pause</button>
+      <button class="reset" onclick="resetTimer()">Reset</button>
+    </div>
+  </div>
+</body>
+</html>

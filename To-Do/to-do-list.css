@@ -1,0 +1,86 @@
+.strike_none {
+  text-decoration: none;
+}
+
+.strike_done {
+  text-decoration: line-through;
+  color: #5b7a9d;
+}
+
+.green {
+  background-color: #36d344 !important;
+  border-color: #36d344 !important;
+}
+
+/* Make the main container and elements bigger */
+body .w-96 {
+  width: 32rem !important; /* 512px */
+}
+
+body .p-4 {
+  padding: 2rem !important;
+}
+
+body .text-xl {
+  font-size: 2rem !important;
+}
+
+body .text-sm {
+  font-size: 1.1rem !important;
+}
+
+body .h-12 {
+  height: 3.5rem !important;
+}
+
+body .w-7, body .h-7 {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+
+body .rounded-lg {
+  border-radius: 1.5rem !important;
+}
+
+body .rounded-\[7px\] {
+  border-radius: 0.7rem !important;
+}
+
+body .px-3 {
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+}
+
+body .px-4 {
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+}
+
+body .py-2 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+body .w-9\/12, body .w-1\/4 {
+  font-size: 1.1rem !important;
+}
+
+/* Modal size */
+#task-modal .w-80 {
+  width: 28rem !important;
+}
+
+#task-modal .p-6 {
+  padding: 2rem !important;
+}
+
+#task-modal .text-lg {
+  font-size: 1.5rem !important;
+}
+
+/* Increase input and select size */
+#task-modal input,
+#task-modal select {
+  font-size: 1.1rem !important;
+  padding: 0.75rem 1rem !important;
+}

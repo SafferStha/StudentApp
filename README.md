@@ -13,7 +13,7 @@ With StudentApp, you can:
 
 Our mission is to empower students with an all-in-one solution for academic success and personal growth.
 
-> ## Made by students, for students
+>## Made by students, for students
 
 ## Meet Team Doberman
 
@@ -42,4 +42,4 @@ Our mission is to empower students with an all-in-one solution for academic succ
 - [ ] Tiny Games for Study Breaks
 - [ ] Notes Management
 
->### *And many more features on the way…*
+> ### *And many more features on the way…*

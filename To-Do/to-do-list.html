@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    <link rel="stylesheet" href="to-do-list.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdn.tailwindcss.com/3.0.12">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <script src="https://cdn.tailwindcss.com/3.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></script>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</head>
+<body>
+  <div class="flex justify-center items-center min-h-screen bg-[#cbd7e3]">
+    <div class="h-auto w-96 bg-white rounded-lg p-4">
+      <div class="mt-3 text-sm text-[#8ea6c8] flex justify-between items-center">
+        <p class="set_date">Thursday 28 May</p>
+        <p class="set_time">8:00 AM</p>
+      </div>
+
+      <p class="text-xl font-semibold mt-2 text-[#063c76]">To-do List</p>
+
+      <div class="w-full mt-4 flex text-sm flex-col text-center justify-center">
+        <div id="calendar-row" class="flex justify-between px-[15px]">
+          <!-- JS will populate day name + date inside here -->
+        </div>
+      </div>
+
+      <ul class="my-4" id="task-container" class="sortable">
+        <!-- Existing tasks here  -->
+        <!-- We can Add new tasks here dynamically -->
+      </ul>
+
+      <!-- Task Button -->
+      <div class="mt-4 flex justify-center">
+        <button id="add-task-btn" class="bg-[#063c76] text-white px-4 py-2 rounded hover:bg-[#092d56] transition">
+          ➕ Add Task
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Task Modal -->
+  <div id="task-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded-lg w-80 space-y-4">
+      <h2 class="text-lg font-semibold text-[#063c76]">Add New Task</h2>
+      <input id="task-title" type="text" placeholder="Task Title" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none">
+
+      <select id="task-day" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none">
+        <!-- JS will populate day options -->
+      </select>
+
+      <input id="task-time" type="time" class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none">
+
+      <div class="flex justify-end gap-2">
+        <button id="cancel-task" class="px-3 py-1 text-sm text-gray-600 hover:underline">Cancel</button>
+        <button id="save-task" class="bg-[#063c76] text-white px-3 py-1 rounded text-sm">Save</button>
+      </div>
+    </div>
+  </div>
+  <!-- Edit Task Modal -->
+<div id="edit-task-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-30 flex justify-center items-center">
+  <div class="bg-white p-6 rounded shadow-md w-80">
+    <h2 class="text-lg font-semibold mb-4">Edit Task</h2>
+    <input id="edit-title" class="w-full border px-2 py-1 rounded mb-2" placeholder="Task title" />
+    <input id="edit-date" type="date" class="w-full border px-2 py-1 rounded mb-2" />
+    <input id="edit-time" type="time" class="w-full border px-2 py-1 rounded mb-4" />
+    <div class="flex justify-between">
+      <button id="update-task-btn" class="bg-blue-500 text-white px-3 py-1 rounded">Update</button>
+      <button id="delete-task-btn" class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+      <button id="cancel-edit-btn" class="bg-gray-400 text-white px-3 py-1 rounded">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="to-do-list.js"></script>
+</body>
+</html>
