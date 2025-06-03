@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Note taking</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sticky Notes</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah"/>
+      <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+
     <link rel="stylesheet" href="notes.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body>
-    <diV id = "container">
-        <div id = "list-header">
-            <div id = "addNoteDiv" onclick="popup()">
-                <i class = "fa-solid fa-plus"></i>
-      </diV>
-    <div class ="blankDiv"></div>
-    <div class ="blankDiv"></div>   
-    </div>
-    <div id = "list container">
-        <ul id ="notes-list"></ul>
+  </head>
+  <body>
+    <div class="sticky-notes">
+      <div class="note-container">
+        <div class="note-content" contenteditable>
+          Create Sticky Note Using HTML, CSS, and JavaScript.
         </div>
-    </diV>
-    <script src="notes.js"></script>
-</body>
+        <div class="note-actions">
+          <button class="delete-note" onclick="deleteNote(this)">Delete</button>
+        </div>
+      </div>
+    </div>
+    <div class="create-note" title="New Notes" onclick="createNote()">+</div>
+  <script src="notes.js"></script>
+  </body>
 </html>
