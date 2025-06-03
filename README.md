@@ -26,20 +26,20 @@ Our mission is to empower students with an all-in-one solution for academic succ
 
 - To-Do List
 - Pomodoro Timer
+- Notes Management
+- Event Calendar *(coming soon)*
 - Timetable Planner *(coming soon)*
 - Academic Progress Tracker *(coming soon)*
-- Event Calendar *(coming soon)*
 - Tiny Games for Study Breaks ***(coming soon)***
-- Notes Management *(coming soon)*
 
 ## Roadmap 🗺️
 
 - [x] To-Do List
 - [x] Pomodoro Timer
+- [x] Notes Management
+- [ ] Event Calendar
 - [ ] Timetable Planner
 - [ ] Academic Progress Tracker
-- [ ] Event Calendar
 - [ ] Tiny Games for Study Breaks
-- [ ] Notes Management
 
 > ### *And many more features on the way…*
